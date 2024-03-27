@@ -4,7 +4,8 @@ import Layout from '@/layout/index.vue'
 interface extendRoute {
   hidden?: boolean
 }
-//
+import monitorRouter from './modules/monitor'
+import anonymousRouter from './modules/anonymous'
 import tableRouter from './modules/table'
 import dataScreenRouter from './modules/dataScreen'
 import excelRouter from './modules/excel'
@@ -19,17 +20,19 @@ import functionPageRouter from './modules/functionPage'
 
 // 异步组件
 export const asyncRoutes = [
-  ...dataScreenRouter,
-  ...echartsRouter,
-  ...tableRouter,
-  ...formRouter,
-  ...othersRouter,
-  ...functionPageRouter,
-  ...chatRouter,
-  ...nestedRouter,
-  ...excelRouter,
-  ...externalLink,
-  ...systemRouter,
+  ...monitorRouter,
+  ...anonymousRouter,
+  // ...dataScreenRouter,
+  // ...echartsRouter,
+  // ...tableRouter,
+  // ...formRouter,
+  // ...othersRouter,
+  // ...functionPageRouter,
+  // ...chatRouter,
+  // ...nestedRouter,
+  // ...excelRouter,
+  // ...externalLink,
+  // ...systemRouter,
 ]
 
 /**
@@ -73,16 +76,34 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
     name: 'layout',
     component: Layout,
     redirect: '/home',
-    meta: { title: '首页', icon: 'House' },
+    meta: { title: '交易软件用户监测', icon: 'Odometer' },
     children: [
       {
         path: '/home',
-        component: () => import('@/views/home/index.vue'),
+        component: () => import('@/views/monitor/userMonitorPage.vue'),
         name: 'home',
-        meta: { title: '首页', icon: 'House', affix: true, role: ['other'] },
+        meta: { title: '交易软件用户监测', icon: 'Odometer', affix: true, role: ['other'] },
       },
     ],
   },
+  // {
+  //   path: '/monitor',
+  //   component: Layout,
+  //   redirect: '/monitor/userMonitorPage',
+  //   name: 'userMonitorPage',
+  //   meta: {
+  //     title: '交易软件用户监测',
+  //     icon: 'chat-square',
+  //   },
+  //   children: [
+  //     {
+  //       path: '/monitor/userMonitorPage',
+  //       component: () => import('@/views/monitor/userMonitorPage.vue'),
+  //       name: 'userMonitorPage',
+  //       meta: { title: '交易软件用户监测', icon: 'chat-square' },
+  //     },
+  //   ],
+  // },
 ]
 
 /**

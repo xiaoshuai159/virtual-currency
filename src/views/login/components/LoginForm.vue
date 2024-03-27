@@ -1,7 +1,6 @@
 <template>
   <div class="login-title">
-    <img class="icon" src="@/assets/image/logo.png" alt="logo" />
-    <h2 class="title">Vue-Admin-Perfect</h2>
+    <h2 class="title">虚拟货币全链条监测平台</h2>
   </div>
   <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules">
     <el-form-item label="" prop="username">

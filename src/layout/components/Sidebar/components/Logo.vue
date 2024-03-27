@@ -5,8 +5,8 @@
         <img src="@/assets/image/logo.png" class="sidebar-logo" />
       </router-link>
       <router-link v-else key="expand" class="sidebar-logo-link" to="/">
-        <img src="@/assets/image/logo.png" class="sidebar-logo" />
-        <h1 class="sidebar-title">Vue Admin Perfect</h1>
+        <!-- <img src="@/assets/image/logo.png" class="sidebar-logo" /> -->
+        <h1 class="sidebar-title">虚拟货币全链条监测平台</h1>
       </router-link>
     </transition>
   </div>
@@ -47,9 +47,8 @@
         margin: 0;
         color: #fff;
         font-weight: 600;
-        margin-left: 12px;
         line-height: 50px;
-        font-size: 14px;
+        font-size: 16px;
         vertical-align: middle;
       }
     }

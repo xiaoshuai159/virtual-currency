@@ -2,7 +2,7 @@
   <div class="main-container">
     <UHeader />
     <Main />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 

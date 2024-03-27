@@ -4,7 +4,7 @@
   <div class="main-container">
     <HeaderVertical />
     <Main />
-    <Footer />
+    <!-- <Footer /> -->
   </div>
 </template>
 
