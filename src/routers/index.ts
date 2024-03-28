@@ -82,7 +82,7 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
         path: '/home',
         component: () => import('@/views/monitor/userMonitorPage.vue'),
         name: 'home',
-        meta: { title: '交易软件用户监测', icon: 'Odometer', affix: true, role: ['other'] },
+        meta: { title: '交易软件用户监测', icon: 'Odometer', breadcrumb: false, role: ['other'] },
       },
     ],
   },
