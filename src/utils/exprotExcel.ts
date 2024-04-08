@@ -1,4 +1,5 @@
 import ExcelJS from 'exceljs'
+
 const autoWidthAction = (val, width = 10) => {
   if (val == null) {
     width = 10
@@ -61,6 +62,7 @@ export const exportExcel = async ({ column, data, filename, autoWidth, format })
     window.URL.revokeObjectURL(link.href) // 释放内存
   }
 }
+
 export function addCellStyle(cell, attr) {
   const { color, fontSize, horizontal, bold } = attr || {}
   // eslint-disable-next-line no-param-reassign

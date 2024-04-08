@@ -8,10 +8,12 @@
 
   .hideSliderLayout {
     margin-left: 0;
+
     .el-menu--horizontal {
       border-bottom: none;
     }
   }
+
   .sidebar-container {
     transition: width 0.28s;
     width: $sideBarWidth !important;
@@ -190,6 +192,7 @@
       .svg-icon {
         margin-right: 16px;
       }
+
       .sub-el-icon {
         margin-right: 12px;
         margin-left: -2px;

@@ -1,5 +1,6 @@
 import { ElLoading } from 'element-plus'
 import { Loading } from '@element-plus/icons-vue'
+
 let loading = null
 
 export const openLoading = (options = {}) => {

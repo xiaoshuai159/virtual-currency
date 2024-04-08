@@ -5,6 +5,7 @@
   overflow: hidden;
   //background: url("/static/screen/bg.png") no-repeat center center;
   background: #041c4a;
+
   .header {
     box-sizing: border-box;
     width: 100%;
@@ -15,6 +16,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     .header-bg-title {
       font-size: 42px;
       font-weight: normal;
@@ -23,6 +25,7 @@
       color: #ffffff;
       margin-bottom: 14px;
     }
+
     .date {
       top: 25px;
       line-height: 68px;
@@ -33,9 +36,11 @@
       right: 20px;
     }
   }
+
   .circle-bg {
     animation: rotate 5s infinite linear;
   }
+
   @keyframes rotate {
     0% {
       transform: rotate(0deg);
@@ -44,6 +49,7 @@
       transform: rotate(360deg);
     }
   }
+
   .center {
     padding-left: 40px;
     padding-right: 50px;
@@ -52,9 +58,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .circle-bg {
       animation: rotate 5s infinite linear;
     }
+
     @keyframes rotate {
       0% {
         transform: rotate(0deg);
@@ -63,6 +71,7 @@
         transform: rotate(360deg);
       }
     }
+
     .item {
       display: flex;
       /*align-items: center;*/
@@ -70,17 +79,21 @@
         width: 117px;
         height: 109px;
       }
+
       .item-icon1 {
         background: url('@/assets/image/center-inner1.png') no-repeat center 43%;
       }
+
       .item-right {
         margin-left: 20px;
+
         .item-right-inner {
           height: 100%;
           display: flex;
           flex-direction: column;
           justify-content: space-between;
         }
+
         .text-title {
           font-size: 20px;
           letter-spacing: 1px;
@@ -88,11 +101,13 @@
           /*margin-bottom: 6px;*/
           /*height: 20px;*/
         }
+
         .text-number {
           font-size: 44px;
           letter-spacing: 2px;
           color: #00e4ff;
         }
+
         .text-der {
           overflow: hidden;
           box-sizing: border-box;
@@ -100,15 +115,18 @@
           font-size: 16px;
           color: #ffffff;
           letter-spacing: 1px;
+
           .left {
             margin-right: 10px;
           }
+
           img {
             margin-right: 4px;
             margin-top: 4px;
             width: 11px;
             height: 15px;
           }
+
           .right {
             color: #ff0000;
           }
@@ -116,6 +134,7 @@
       }
     }
   }
+
   .footer {
     position: relative;
     padding: 0 30px 0 24px;
@@ -130,9 +149,11 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
+
     .middle {
       flex: 1;
       position: relative;
+
       .migration {
         left: -18%;
         top: -15%;
@@ -141,6 +162,7 @@
         position: absolute;
       }
     }
+
     .right {
       width: 568px;
       align-items: flex-end;
@@ -152,6 +174,7 @@
       background-size: contain;
       background-repeat: no-repeat;
     }
+
     .item-complex {
       width: 558px;
       height: 362px;

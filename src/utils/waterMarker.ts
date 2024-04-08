@@ -71,4 +71,5 @@ function watermark(options) {
   //   })
   // }
 }
+
 export default watermark

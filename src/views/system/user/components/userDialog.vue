@@ -24,7 +24,7 @@
         <el-input v-model="ruleForm.photo" placeholder="请输入手机号" />
       </el-form-item>
       <el-form-item label="账户密码">
-        <el-input v-model="ruleForm.password" placeholder="请输入账户密码,如果不输入默认123456" type="password" clearable />
+        <el-input v-model="ruleForm.passwd" placeholder="请输入账户密码,如果不输入默认123456" type="passwd" clearable />
       </el-form-item>
       <el-form-item label="用户状态">
         <el-switch v-model="ruleForm.status" inline-prompt active-text="启用" inactive-text="禁用"></el-switch>
@@ -65,7 +65,7 @@
     sex: '男',
     role: null,
     photo: null,
-    password: null,
+    passwd: null,
     describe: null,
     status: true,
   })

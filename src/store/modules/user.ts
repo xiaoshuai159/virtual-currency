@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-
+import service from '@/api/request'
 export const useUserStore = defineStore({
   // id: 必须的，在所有 Store 中唯一
   id: 'userState',
@@ -16,11 +16,16 @@ export const useUserStore = defineStore({
   // 可以同步 也可以异步
   actions: {
     // 登录
-    login(userInfo) {
-      const { username, password } = userInfo
+    async login(userInfo) {
+      const { username, passwd, captcha } = userInfo
+      const formData = new FormData()
+      formData.append('username', username)
+      formData.append('passwd', passwd)
+      formData.append('vcode', captcha)
       return new Promise(async (resolve, reject) => {
-        this.token = username
-        this.userInfo = userInfo
+        const { data: res } = await service.post('/api/v1/login_in', formData)
+        this.token = res.token
+        this.userInfo = res.data
         await this.getRoles()
         resolve(username)
       })

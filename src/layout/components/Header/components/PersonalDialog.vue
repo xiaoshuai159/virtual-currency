@@ -4,11 +4,11 @@
       <el-form-item label="姓名">
         <el-input v-model="ruleForm.name" disabled></el-input>
       </el-form-item>
-      <el-form-item label="旧的密码" prop="password">
-        <el-input v-model="ruleForm.password" type="password"></el-input>
+      <el-form-item label="旧的密码" prop="passwd">
+        <el-input v-model="ruleForm.passwd" type="passwd"></el-input>
       </el-form-item>
       <el-form-item label="新的密码" prop="configPassword">
-        <el-input v-model="ruleForm.configPassword" type="password"></el-input>
+        <el-input v-model="ruleForm.configPassword" type="passwd"></el-input>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -38,7 +38,7 @@
   const ruleFormRef = ref<FormInstance>()
   const ruleForm = reactive({
     name: UserStore.userInfo.username,
-    password: UserStore.userInfo.password,
+    passwd: UserStore.userInfo.passwd,
     configPassword: '',
   })
   const rules = reactive({

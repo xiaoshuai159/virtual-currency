@@ -13,6 +13,7 @@ export const useResizeHandler = () => {
   const device = computed(() => {
     return SettingStore.device
   })
+
   function $_isMobile() {
     const rect = body.getBoundingClientRect()
     return rect.width - 1 < WIDTH
@@ -43,6 +44,7 @@ export const useResizeHandler = () => {
       }
     }
   }
+
   onMounted(() => {
     const isMobile = $_isMobile()
     if (isMobile) {

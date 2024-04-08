@@ -6,6 +6,7 @@
   background: white;
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
 }
+
 .footer {
   flex: 1;
   display: flex;
@@ -17,16 +18,19 @@
   box-shadow: 0 0 12px rgb(0 0 0 / 5%);
   position: relative;
   box-sizing: border-box;
+
   .util {
     margin-bottom: 15px;
     display: flex;
     justify-content: flex-end;
     flex-shrink: 0;
   }
+
   .table-inner {
     flex: 1;
     position: relative;
   }
+
   .table {
     position: absolute;
     left: 0;

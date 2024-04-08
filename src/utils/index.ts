@@ -351,6 +351,7 @@ export function getColor() {
   }
   return str
 }
+
 // 检查给定的值是否是数组
 export const isArray = function (value) {
   return objToString.call(value) === '[object Array]'
@@ -388,6 +389,7 @@ export const isPlainObject = function (value) {
 // // 深度克隆 array 数组或 json 对象，返回克隆后的副本
 export const deepObjClone = function (obj) {
   const weakMap = new WeakMap()
+
   function clone(obj) {
     if (obj == null) {
       return obj
@@ -413,6 +415,7 @@ export const deepObjClone = function (obj) {
     }
     return copy
   }
+
   return clone(obj)
 }
 

@@ -16,8 +16,8 @@
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4">
-          <el-form-item label="登录密码" prop="password">
-            <el-input v-model="form.password" placeholder="请输入登录密码" clearable></el-input>
+          <el-form-item label="登录密码" prop="passwd">
+            <el-input v-model="form.passwd" placeholder="请输入登录密码" clearable></el-input>
           </el-form-item>
         </el-col>
         <el-col :xs="24" :sm="12" :md="8" :lg="6" :xl="4">
@@ -34,10 +34,10 @@
   import { reactive, ref } from 'vue'
 
   const formRuleTwoRef = ref()
-  const form = reactive({ phone: '', sex: '', password: '', auth: '' })
+  const form = reactive({ phone: '', sex: '', passwd: '', auth: '' })
   const rules = reactive({
     phone: { required: true, message: '请输入手机', trigger: 'blur' },
-    password: { required: true, message: '请输入登录密码', trigger: 'blur' },
+    passwd: { required: true, message: '请输入登录密码', trigger: 'blur' },
     auth: { required: true, message: '请输入权限角色', trigger: 'blur' },
   })
 </script>

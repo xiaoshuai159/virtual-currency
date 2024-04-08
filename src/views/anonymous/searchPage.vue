@@ -26,6 +26,7 @@
 <script lang="ts" setup>
   import router from '@/routers'
   import { ref } from 'vue'
+  import axios from 'axios'
   const tooltipVisible = ref(false)
   const inputContent = ref('')
   const showTooltip = () => {
@@ -35,6 +36,10 @@
     tooltipVisible.value = false
   }
   const toIpPage = () => {
+    // axios.get("/api/testGetAllList").then(({data:res})=>{
+    //   console.log(res);
+
+    // })
     if (inputContent.value == '123.123.123.123') {
       router.push('/anonymous/ipSearchPage')
     } else if (inputContent.value == '13345678901') {

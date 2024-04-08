@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw, createWebHashHistory, Router } from 'vue-router'
 import Layout from '@/layout/index.vue'
+
 // 扩展继承属性
 interface extendRoute {
   hidden?: boolean
 }
+
 import monitorRouter from './modules/monitor'
 import anonymousRouter from './modules/anonymous'
 import tableRouter from './modules/table'

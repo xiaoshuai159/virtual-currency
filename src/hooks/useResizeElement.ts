@@ -1,6 +1,7 @@
 import ResizeObserver from 'resize-observer-polyfill'
 import { onBeforeUnmount } from 'vue'
 import requestAnimationFrameThrottle from '@/utils/requestAnimationFrameThrottle'
+
 export const useResizeElement = (chart, chartsRef) => {
   let observer = null
   let widthW = 0

@@ -1,4 +1,5 @@
 import wePng from '@/assets/image/we.png'
+
 export const chatData = [
   {
     is_self: 0,

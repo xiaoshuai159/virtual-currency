@@ -17,6 +17,7 @@ html.dark {
   .w-e-menu-panel {
     background: none !important;
   }
+
   // 富文本
   .md {
     background: none !important;
@@ -25,6 +26,7 @@ html.dark {
   #app {
     .sidebar-container {
       background: var(--el-bg-color) !important;
+
       & .el-menu .el-sub-menu > .el-sub-menu__title,
       & .el-sub-menu .el-menu-item {
         background-color: var(--el-bg-color) !important;
@@ -32,10 +34,12 @@ html.dark {
         &:hover {
           background-color: var(--el-bg-color) !important;
         }
+
         &.is-active {
           background-color: #060708 !important;
         }
       }
+
       .el-sub-menu__title {
         &:hover {
           background-color: var(--el-bg-color) !important;
@@ -49,11 +53,13 @@ html.dark {
     box-sizing: border-box;
     border: var(--zb-border-light);
   }
+
   .el-drawer__header {
     span {
       color: var(--el-text-color-primary) !important;
     }
   }
+
   .theme-item {
     color: var(--el-text-color-primary) !important;
   }
@@ -62,6 +68,7 @@ html.dark {
     font-weight: bold;
     color: white;
   }
+
   .footer-layout {
     background: none;
     color: white;
@@ -72,10 +79,12 @@ html.dark {
       background: none !important;
       border: var(--zb-border-light);
     }
+
     .footer {
       background: none !important;
       border: var(--zb-border-light);
     }
+
     .el-table__header th {
       color: white !important;
     }
@@ -84,13 +93,16 @@ html.dark {
   // header
   .m-layout-header {
     color: var(--el-text-color-primary) !important;
+
     .header-inner {
       background-color: var(--el-bg-color) !important;
       border-bottom: var(--zb-border-light);
+
       .header-icon {
         color: #bfcbd9 !important;
       }
     }
+
     // tagviews
     .m-tags-view {
       background: var(--el-bg-color) !important;
@@ -98,6 +110,7 @@ html.dark {
       border-top: none;
       border-left: none;
       box-sizing: border-box;
+
       .el-tabs--card > .el-tabs__header {
         border-bottom: none !important;
       }
@@ -109,6 +122,7 @@ html.dark {
     .echarts-map {
       background: var(--el-bg-color) !important;
     }
+
     .app-echarts {
       background: none;
     }
@@ -117,10 +131,12 @@ html.dark {
       .header {
         background: none;
       }
+
       .footer {
         background: none;
       }
     }
+
     .m-container-layout {
       .m-container-layout-inner {
         background: none;
@@ -147,15 +163,19 @@ html.dark {
   // 登录
   .login-container {
     background-color: #191919 !important;
+
     .login-box {
       background-color: #000000cc !important;
+
       .login-form {
         background-color: #141414 !important;
+
         .title {
           color: var(--el-text-color-primary) !important;
         }
       }
     }
+
     .info-qrcode {
       background: white;
     }
