@@ -24,10 +24,14 @@ export const useUserStore = defineStore({
       formData.append('vcode', captcha)
       return new Promise(async (resolve, reject) => {
         const { data: res } = await service.post('/api/v1/login_in', formData)
-        this.token = res.token
-        this.userInfo = res.data
-        await this.getRoles()
-        resolve(username)
+        if (res.code == 200) {
+          this.token = res.token
+          this.userInfo = res.data
+          await this.getRoles()
+          resolve(username)
+        } else {
+          console.log(res.msg)
+        }
       })
     },
     // 获取用户授权角色信息，实际应用中 可以通过token通过请求接口在这里获取用户信息

@@ -174,68 +174,8 @@
   const mcl = ref('115,401,23')
   const jckh = ref('850,000')
 
-  const walletData = ref([
-    { value: 1048, name: 'BTC' },
-    { value: 735, name: 'ETH' },
-    { value: 580, name: 'TRX' },
-    { value: 484, name: 'LTC' },
-    { value: 300, name: 'Monero' },
-    { value: 735, name: 'USDT' },
-  ])
-  let buytableData = ref([
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: ' 1518 弄',
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      address: ' 1517 弄',
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      address: ' 1519 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-  ])
-  let selltableData = ref([
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: ' 1518 弄',
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      address: ' 1517 弄',
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      address: ' 1519 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-  ])
+  let buytableData = ref([])
+  let selltableData = ref([])
 
   function drawPiechart1(walletData) {
     if (document.getElementById('myPieChart1') == null) {

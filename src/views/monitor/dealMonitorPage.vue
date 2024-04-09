@@ -78,78 +78,12 @@
   import service from '@/api/request'
   import dayjs from 'dayjs'
 
-  const walletData = ref([
-    { value: 1048, name: 'Search Engine' },
-    { value: 735, name: 'Direct' },
-    { value: 580, name: 'Email' },
-    { value: 484, name: 'Union Ads' },
-    { value: 300, name: 'Video Ads' },
-    { value: 735, name: 'Direct' },
-    { value: 580, name: 'Email2' },
-    { value: 484, name: 'Union' },
-    { value: 300, name: 'Ads' },
-  ])
   const cbrs = ref('2,1341')
   const tbrs = ref('3,2123')
   const cbdzs = ref('125,401,23')
   const tbdzs = ref('125,401,23')
-  const buytableData = ref([
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: ' 1518 弄',
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      address: ' 1517 弄',
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      address: ' 1519 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-  ])
-  const selltableData = ref([
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: ' 1518 弄',
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      address: ' 1517 弄',
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      address: ' 1519 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-  ])
-  const jiaoyi = ref([120, 132, 101, 134, 90, 230, 210])
-  const chaxun = ref([220, 182, 191, 234, 290, 330, 310])
-  const xdata = ref(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'])
+  const buytableData = ref([])
+  const selltableData = ref([])
   function drawlineChart(keys, chargingValues, withdrawlValues) {
     const mylineChart = echarts.init(document.getElementById('mylinechart'))
     let option = {
