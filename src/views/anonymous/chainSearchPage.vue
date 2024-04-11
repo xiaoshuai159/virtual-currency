@@ -49,13 +49,17 @@
       <el-col :span="1"></el-col>
       <el-col :span="22">
         <div class="tableClass">
-          <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+          <el-table
+            :data="tableData.slice((pagination.currentPage - 1) * pagination.pageSize, pagination.currentPage * pagination.pageSize)"
+            style="width: 100%"
+            @selection-change="handleSelectionChange"
+          >
             <el-table-column type="selection" width="55" />
             <el-table-column prop="smxx" label="实名信息" min-width="140" align="center" />
             <el-table-column prop="pt" label="平台" min-width="100" align="center" />
 
             <el-table-column prop="glnc" label="关联昵称" min-width="120" align="center" />
-            <el-table-column prop="sjhmgsdq" label="手机号码归属地区" min-width="180" align="center" />
+            <el-table-column prop="sjhmgsdq" label="归属地区" min-width="180" align="center" />
             <el-table-column prop="yys" label="运营商" min-width="100" align="center" />
           </el-table>
         </div>
@@ -65,7 +69,7 @@
             background
             :page-size="10"
             layout="total, prev, pager, next, jumper"
-            :total="total"
+            :total="tableData.length"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
@@ -76,7 +80,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, reactive, Ref } from 'vue'
+  import { ref, reactive, Ref, onBeforeMount } from 'vue'
+  import service from '@/api/request'
   const smxxInput = ref('')
   const ncInput = ref('')
   const gsdInput = ref('')
@@ -110,83 +115,12 @@
       label: 'Option3',
     },
   ]
-  const tableData = [
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-    {
-      smxx: '*******4901',
-      pt: 'Huobi',
-      glnc: '等会吃个橘子',
-      sjhmgsdq: '山东省， 泰安市， 新泰市',
-      yys: '中国移动',
-    },
-  ]
+  let tableData = ref([])
+  let curChain = ref('')
   const pagination = reactive({
     currentPage: 1,
     pageSize: 10,
   })
-  const total = ref(0)
   const handleSizeChange = (val: number) => {
     console.log(`${val} items per page`)
   }
@@ -202,8 +136,17 @@
   const toggleAdvanced = () => {
     isCollapse.value = !isCollapse.value
   }
-  const searchClick = () => {
-    console.log('点击了查询按钮')
+  const searchClick = async () => {
+    const queryData = {
+      value: curIp.value,
+      exchange: jyptValue.value,
+      address: qbInput.value,
+      chain: sslValue.value,
+    }
+    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    if (res.code == 200) {
+      tableData.value = res.data
+    }
   }
   const resetClick = () => {
     smxxInput.value = ''
@@ -214,6 +157,10 @@
     console.log('点击了重置按钮')
     searchClick()
   }
+  onBeforeMount(() => {
+    curChain.value = JSON.parse(window.sessionStorage.getItem('curChain'))
+    searchClick()
+  })
 </script>
 <style lang="scss" scoped>
   .el-pagination {

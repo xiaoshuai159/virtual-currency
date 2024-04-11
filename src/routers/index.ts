@@ -8,34 +8,9 @@ interface extendRoute {
 
 import monitorRouter from './modules/monitor'
 import anonymousRouter from './modules/anonymous'
-import tableRouter from './modules/table'
-import dataScreenRouter from './modules/dataScreen'
-import excelRouter from './modules/excel'
-import nestedRouter from './modules/nested'
-import systemRouter from './modules/system'
-import echartsRouter from './modules/echarts'
-import chatRouter from './modules/chat'
-import othersRouter from './modules/other'
-import externalLink from './modules/externalLink'
-import formRouter from './modules/form'
-import functionPageRouter from './modules/functionPage'
 
 // 异步组件
-export const asyncRoutes = [
-  ...monitorRouter,
-  ...anonymousRouter,
-  // ...dataScreenRouter,
-  // ...echartsRouter,
-  // ...tableRouter,
-  // ...formRouter,
-  // ...othersRouter,
-  // ...functionPageRouter,
-  // ...chatRouter,
-  // ...nestedRouter,
-  // ...excelRouter,
-  // ...externalLink,
-  // ...systemRouter,
-]
+export const asyncRoutes = [...monitorRouter, ...anonymousRouter]
 
 /**
  * path ==> 路由路径
@@ -88,24 +63,53 @@ export const constantRoutes: Array<RouteRecordRaw & extendRoute> = [
       },
     ],
   },
-  // {
-  //   path: '/monitor',
-  //   component: Layout,
-  //   redirect: '/monitor/userMonitorPage',
-  //   name: 'userMonitorPage',
-  //   meta: {
-  //     title: '交易软件用户监测',
-  //     icon: 'chat-square',
-  //   },
-  //   children: [
-  //     {
-  //       path: '/monitor/userMonitorPage',
-  //       component: () => import('@/views/monitor/userMonitorPage.vue'),
-  //       name: 'userMonitorPage',
-  //       meta: { title: '交易软件用户监测', icon: 'chat-square' },
-  //     },
-  //   ],
-  // },
+  {
+    path: '/anonymous',
+    component: Layout,
+    redirect: '/anonymous/searchPage',
+    name: 'searchPage',
+    meta: {
+      title: '反匿名查询',
+      icon: 'CircleCheck',
+    },
+    hidden: true,
+    children: [
+      {
+        path: '/anonymous/searchPage',
+        component: () => import('@/views/anonymous/searchPage.vue'),
+        name: 'searchPage',
+        meta: { title: '反匿名查询', breadcrumb: false, icon: 'CircleCheck' },
+      },
+      {
+        path: '/anonymous/ipSearchPage',
+        component: () => import('@/views/anonymous/ipSearchPage.vue'),
+        name: 'ipSearchPage',
+        meta: { title: 'IP地址查询' },
+        hidden: true,
+      },
+      {
+        path: '/anonymous/nameSearchPage',
+        component: () => import('@/views/anonymous/nameSearchPage.vue'),
+        name: 'nameSearchPage',
+        meta: { title: '昵称查询' },
+        hidden: true,
+      },
+      {
+        path: '/anonymous/infoSearchPage',
+        component: () => import('@/views/anonymous/infoSearchPage.vue'),
+        name: 'infoSearchPage',
+        meta: { title: '实名信息查询' },
+        hidden: true,
+      },
+      {
+        path: '/anonymous/chainSearchPage',
+        component: () => import('@/views/anonymous/chainSearchPage.vue'),
+        name: 'chainSearchPage',
+        meta: { title: '链上地址查询' },
+        hidden: true,
+      },
+    ],
+  },
 ]
 
 /**

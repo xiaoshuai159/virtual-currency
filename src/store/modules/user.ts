@@ -30,7 +30,8 @@ export const useUserStore = defineStore({
           await this.getRoles()
           resolve(username)
         } else {
-          console.log(res.msg)
+          console.log(res.data)
+          reject(new Error(res.data)) // 将错误信息传递给外部
         }
       })
     },

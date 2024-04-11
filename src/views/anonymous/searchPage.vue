@@ -26,7 +26,6 @@
 <script lang="ts" setup>
   import router from '@/routers'
   import { ref } from 'vue'
-  import axios from 'axios'
   const tooltipVisible = ref(false)
   const inputContent = ref('')
   const showTooltip = () => {
@@ -36,19 +35,49 @@
     tooltipVisible.value = false
   }
   const toIpPage = () => {
-    // axios.get("/api/testGetAllList").then(({data:res})=>{
-    //   console.log(res);
-
-    // })
-    if (inputContent.value == '123.123.123.123') {
+    if (isIPAddress(inputContent.value)) {
+      window.sessionStorage.setItem('curIp', JSON.stringify(inputContent.value))
       router.push('/anonymous/ipSearchPage')
-    } else if (inputContent.value == '13345678901') {
+    } else if (isPhoneNumber(inputContent.value)) {
+      window.sessionStorage.setItem('curPhone', JSON.stringify(inputContent.value))
       router.push('/anonymous/infoSearchPage')
-    } else if (inputContent.value == 'TZG3dQV9TMoNj8V4jzEbkkTmajt4ddQAcj') {
+    } else if (isBlockchainAddress(inputContent.value)) {
+      window.sessionStorage.setItem('curChain', JSON.stringify(inputContent.value))
       router.push('/anonymous/chainSearchPage')
-    } else if (inputContent.value == '等会吃个橘子') {
+    } else if (isNickname(inputContent.value)) {
+      window.sessionStorage.setItem('curName', JSON.stringify(inputContent.value))
       router.push('/anonymous/nameSearchPage')
+    } else {
+      console.log('都不是')
     }
+  }
+  // 判断输入内容是否为手机号
+  const isPhoneNumber = (input) => {
+    // 11位数字，以1开头
+    const phoneNumberRegex = /^1\d{10}$/
+    return phoneNumberRegex.test(input)
+  }
+
+  // 判断输入内容是否为链上地址
+  const isBlockchainAddress = (input) => {
+    // 以0x开头，后跟40个十六进制字符
+    const addressRegex = /^0x[a-fA-F0-9]{40}$/
+    return addressRegex.test(input)
+  }
+
+  // 判断输入内容是否为昵称
+  const isNickname = (input) => {
+    // 包含字母、数字、下划线，长度在2到20之间
+    const nicknameRegex = /^[a-zA-Z0-9_]{2,20}$/
+    return nicknameRegex.test(input)
+  }
+
+  // 判断输入内容是否为IP地址
+  const isIPAddress = (input) => {
+    // IP地址格式，包括四个数字，每个数字在0到255之间，用点号分隔
+    const ipAddressRegex =
+      /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+    return ipAddressRegex.test(input)
   }
 </script>
 <style lang="scss" scoped>

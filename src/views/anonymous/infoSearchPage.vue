@@ -46,13 +46,17 @@
       <el-col :span="1"></el-col>
       <el-col :span="22">
         <div class="tableClass">
-          <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+          <el-table
+            :data="tableData.slice((pagination.currentPage - 1) * pagination.pageSize, pagination.currentPage * pagination.pageSize)"
+            style="width: 100%"
+            @selection-change="handleSelectionChange"
+          >
             <el-table-column type="selection" width="55" />
-            <el-table-column prop="pt" label="平台" min-width="100" align="center" />
-            <el-table-column prop="dz" label="地址" min-width="280" align="center" />
-            <el-table-column prop="szl" label="所在链" min-width="100" align="center" />
-            <el-table-column prop="nc" label="昵称" min-width="100" align="center" />
-            <el-table-column prop="kh" label="卡号" min-width="160" align="center" />
+            <el-table-column prop="exchange" label="平台" min-width="100" align="center" />
+            <el-table-column prop="address" label="地址" show-overflow-tooltip min-width="280" align="center" />
+            <el-table-column prop="chain" label="所在链" min-width="100" align="center" />
+            <el-table-column prop="nickname" label="昵称" min-width="100" align="center" />
+            <el-table-column prop="bank_card" label="卡号" min-width="160" align="center" />
           </el-table>
         </div>
         <div class="pagination">
@@ -61,7 +65,7 @@
             background
             :page-size="10"
             layout="total, prev, pager, next, jumper"
-            :total="total"
+            :total="tableData.length"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
           />
@@ -72,7 +76,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, reactive, Ref } from 'vue'
+  import { ref, reactive, Ref, onBeforeMount } from 'vue'
+  import service from '@/api/request'
   const ptInput = ref('')
   const ncInput = ref('')
   const szlValue = ref('')
@@ -105,83 +110,16 @@
       label: 'Option3',
     },
   ]
-  const tableData = [
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-    {
-      pt: 'Huobi',
-      dz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      szl: 'ETH',
-      nc: '等会吃个橘子',
-      kh: '6321****0179',
-    },
-  ]
+  const curPhone = ref('')
+  onBeforeMount(() => {
+    curPhone.value = JSON.parse(window.sessionStorage.getItem('curPhone'))
+    searchClick()
+  })
+  let tableData = ref([])
   const pagination = reactive({
     currentPage: 1,
     pageSize: 10,
   })
-  const total = ref(0)
   const handleSizeChange = (val: number) => {
     console.log(`${val} items per page`)
   }
@@ -198,8 +136,18 @@
     isCollapse.value = !isCollapse.value
   }
 
-  const searchClick = () => {
-    console.log('点击了查询按钮')
+  const searchClick = async () => {
+    const queryData = {
+      value: curPhone.value,
+      exchange: ptInput.value,
+      address: dzValue.value,
+      chain: szlValue.value,
+      nickname: ncInput.value,
+    }
+    const { data: res } = await service.get('/api/v1/query_name', { params: queryData })
+    if (res.code == 200) {
+      tableData.value = res.data
+    }
   }
   const resetClick = () => {
     console.log('点击了重置按钮')
