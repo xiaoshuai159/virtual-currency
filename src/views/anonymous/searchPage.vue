@@ -60,15 +60,14 @@
 
   // 判断输入内容是否为链上地址
   const isBlockchainAddress = (input) => {
-    // 以0x开头，后跟40个十六进制字符
-    const addressRegex = /^0x[a-fA-F0-9]{40}$/
+    const addressRegex = /^[a-zA-Z0-9]{32,}$/
     return addressRegex.test(input)
   }
 
   // 判断输入内容是否为昵称
   const isNickname = (input) => {
     // 包含字母、数字、下划线，长度在2到20之间
-    const nicknameRegex = /^[a-zA-Z0-9_]{2,20}$/
+    const nicknameRegex = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/
     return nicknameRegex.test(input)
   }
 

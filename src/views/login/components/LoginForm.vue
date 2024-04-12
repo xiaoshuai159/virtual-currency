@@ -70,7 +70,7 @@
   const router = useRouter()
   const UserStore = useUserStore()
   const ruleFormRef = ref<FormInstance>()
-  const passwordType = ref('passwd')
+  const passwordType = ref('password')
   const loading = ref(false)
 
   const rules = reactive({
@@ -81,8 +81,8 @@
 
   // 表单数据
   const ruleForm = reactive({
-    username: 'Coins',
-    passwd: 'Coins@123',
+    username: '',
+    passwd: '',
     captcha: '',
   })
   let captchaImgUrl = ref('/api/v1/verify_code?time' + new Date())
@@ -100,7 +100,7 @@
   }
   // 显示密码图标
   const showPwd = () => {
-    passwordType.value = passwordType.value === 'passwd' ? '' : 'passwd'
+    passwordType.value = passwordType.value === 'password' ? '' : 'password'
   }
 
   const submitForm = (formEl: FormInstance | undefined) => {

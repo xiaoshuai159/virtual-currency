@@ -53,11 +53,20 @@ export const useUserStore = defineStore({
     },
     // 退出
     logout() {
-      return new Promise((resolve, reject) => {
-        this.token = null
-        this.userInfo = {}
-        this.roles = []
-        resolve(null)
+      return new Promise(async (resolve, reject) => {
+        const formData = new FormData()
+        console.log(this.userInfo)
+
+        formData.append('user_info', this.userInfo.user_id)
+        const { data: res } = await service.post('/api/v1/login_out', formData)
+        if (res.code == 200) {
+          this.token = null
+          this.userInfo = {}
+          this.roles = []
+          resolve(null)
+        } else {
+          resolve(null)
+        }
       })
     },
   },

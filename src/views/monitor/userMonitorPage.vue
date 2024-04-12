@@ -372,7 +372,7 @@
       const keys = Object.keys(resLine.data.query)
       const queryValues = Object.values(resLine.data.query).map((value) => value || 0)
       const transactionValues = Object.values(resLine.data.transaction).map((value) => value || 0)
-      console.log(keys)
+      // console.log(keys)
       drawlineChart(keys, transactionValues, queryValues)
     }
   }

@@ -43,11 +43,11 @@
                   @selection-change="handleSelectionChange"
                 >
                   <el-table-column type="selection" width="55" />
-                  <el-table-column prop="lsdz" label="链上地址" min-width="280" align="center" />
-                  <el-table-column prop="ssl" label="所属链" min-width="100" align="center" />
-                  <el-table-column prop="pt" label="平台" min-width="100" align="center" />
-                  <el-table-column prop="sfxx" label="身份信息" min-width="120" align="center" />
-                  <el-table-column prop="glsmxx" label="关联实名信息" min-width="140" align="center" />
+                  <el-table-column prop="address" label="链上地址" min-width="280" align="center" show-overflow-tooltip />
+                  <el-table-column prop="chain" label="所属链" min-width="100" align="center" />
+                  <el-table-column prop="exchange" label="平台" min-width="100" align="center" />
+                  <el-table-column prop="actor" label="身份信息" min-width="120" align="center" />
+                  <el-table-column prop="name" label="关联实名信息" min-width="140" align="center" />
                 </el-table>
               </div>
               <div class="pagination">
@@ -101,9 +101,9 @@
                   @selection-change="handleSelectionChange2"
                 >
                   <el-table-column type="selection" width="55" />
-                  <el-table-column prop="bz" label="币种" min-width="140" align="center" />
-                  <el-table-column prop="kjs" label="矿机数" min-width="140" align="center" />
-                  <el-table-column prop="kcym" label="矿池域名" min-width="180" align="center" />
+                  <el-table-column prop="coin" label="币种" min-width="140" align="center" />
+                  <el-table-column prop="num" label="矿机数" min-width="140" align="center" />
+                  <el-table-column prop="pool" label="矿池域名" min-width="180" align="center" />
                 </el-table>
               </div>
               <div class="pagination">
@@ -141,35 +141,9 @@
     console.log(tab, event)
   }
   const ssptValue = ref('')
-  const ssptOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let ssptOptions = ref([])
   const kcymValue = ref('')
-  const kcymOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let kcymOptions = ref([])
   const lsdzInput = ref('')
   const bzInput = ref('')
   const smxxInput = ref('')
@@ -208,14 +182,18 @@
   }
   const searchClick1 = async () => {
     const queryData = {
-      value: curIp.value,
-      exchange: jyptValue.value,
-      address: qbInput.value,
-      chain: sslValue.value,
+      value: curName.value,
+      exchange: ssptValue.value,
+      address: lsdzInput.value,
+      name: smxxInput.value,
     }
-    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    const { data: res } = await service.get('/api/v1/query_nickname_address', { params: queryData })
     if (res.code == 200) {
       tableData.value = res.data
+      ssptOptions.value = Array.from(new Set(res.data.map((item) => item.exchange))).map((exchange) => ({
+        label: exchange,
+        value: exchange,
+      }))
     }
   }
   const resetClick1 = () => {
@@ -227,14 +205,14 @@
   }
   const searchClick2 = async () => {
     const queryData = {
-      value: curIp.value,
-      exchange: jyptValue.value,
-      address: qbInput.value,
-      chain: sslValue.value,
+      value: curName.value,
+      coin: bzInput.value,
+      pool_domain: kcymValue.value,
     }
-    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    const { data: res } = await service.get('/api/v1/query_nickname_mining', { params: queryData })
     if (res.code == 200) {
       tableData2.value = res.data
+      kcymOptions.value = Array.from(new Set(res.data.map((item) => item.pool))).map((pool) => ({ label: pool, value: pool }))
     }
   }
   const resetClick2 = () => {

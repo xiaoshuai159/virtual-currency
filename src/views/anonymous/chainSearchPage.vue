@@ -55,12 +55,12 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55" />
-            <el-table-column prop="smxx" label="实名信息" min-width="140" align="center" />
-            <el-table-column prop="pt" label="平台" min-width="100" align="center" />
+            <el-table-column prop="name" label="实名信息" min-width="140" align="center" />
+            <el-table-column prop="exchange" label="平台" min-width="100" align="center" />
 
-            <el-table-column prop="glnc" label="关联昵称" min-width="120" align="center" />
-            <el-table-column prop="sjhmgsdq" label="归属地区" min-width="180" align="center" />
-            <el-table-column prop="yys" label="运营商" min-width="100" align="center" />
+            <el-table-column prop="nickname" label="关联昵称" min-width="120" align="center" />
+            <el-table-column prop="area" label="归属地区" min-width="180" align="center" />
+            <el-table-column prop="operator" label="运营商" min-width="100" align="center" />
           </el-table>
         </div>
         <div class="pagination">
@@ -86,35 +86,9 @@
   const ncInput = ref('')
   const gsdInput = ref('')
   const yysValue = ref('')
-  const yysOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let yysOptions = ref([])
   const ptValue = ref('')
-  const ptOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let ptOptions = ref([])
   let tableData = ref([])
   let curChain = ref('')
   const pagination = reactive({
@@ -138,14 +112,21 @@
   }
   const searchClick = async () => {
     const queryData = {
-      value: curIp.value,
-      exchange: jyptValue.value,
-      address: qbInput.value,
-      chain: sslValue.value,
+      value: curChain.value,
+      exchange: ptValue.value,
+      nickname: ncInput.value,
+      name: smxxInput.value,
+      area: gsdInput.value,
+      operator: yysValue.value,
     }
-    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    const { data: res } = await service.get('/api/v1/query_address', { params: queryData })
     if (res.code == 200) {
       tableData.value = res.data
+      yysOptions.value = Array.from(new Set(res.data.map((item) => item.operator))).map((operator) => ({
+        label: operator,
+        value: operator,
+      }))
+      ptOptions.value = Array.from(new Set(res.data.map((item) => item.exchange))).map((exchange) => ({ label: exchange, value: exchange }))
     }
   }
   const resetClick = () => {
@@ -154,7 +135,6 @@
     ptValue.value = ''
     ncInput.value = ''
     yysValue.value = ''
-    console.log('点击了重置按钮')
     searchClick()
   }
   onBeforeMount(() => {

@@ -141,50 +141,11 @@
     console.log(tab, event)
   }
   const jyptValue = ref('')
-  const jyptOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let jyptOptions = ref([])
   const kcymValue = ref('')
-  const kcymOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let kcymOptions = ref([])
   const sslValue = ref('')
-  const sslOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let sslOptions = ref([])
   const qbInput = ref('')
   const bzInput = ref('')
   let curIp = ref('')
@@ -221,6 +182,11 @@
     const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
     if (res.code == 200) {
       tableData.value = res.data
+      jyptOptions.value = Array.from(new Set(res.data.map((item) => item.exchange))).map((exchange) => ({
+        label: exchange,
+        value: exchange,
+      }))
+      sslOptions.value = Array.from(new Set(res.data.map((item) => item.chain))).map((chain) => ({ label: chain, value: chain }))
     }
   }
   const resetClick1 = () => {
@@ -258,6 +224,7 @@
     const { data: res } = await service.get('/api/v1/query_ip_mining', { params: queryData })
     if (res.code == 200) {
       tableData2.value = res.data
+      kcymOptions.value = Array.from(new Set(res.data.map((item) => item.pool))).map((pool) => ({ label: pool, value: pool }))
     }
   }
   const resetClick2 = () => {

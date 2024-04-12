@@ -8,6 +8,7 @@
             <span>平台：</span>
             <el-input v-model="ptInput" style="width: 240px" placeholder="请输入" />
             <span style="margin-left: 10px">所在链：</span>
+
             <el-select v-model="szlValue" placeholder="请选择">
               <el-option v-for="item in szlOptions" :key="item.value" :label="item.label" :value="item.value" />
             </el-select>
@@ -31,9 +32,10 @@
             <el-col :span="20">
               <div style="display: inline-block; margin-top: 10px">
                 <span>地址：</span>
-                <el-select v-model="dzValue" placeholder="请选择" style="width: 240px">
+                <el-input v-model="dzValue" style="width: 240px" placeholder="请输入" />
+                <!-- <el-select v-model="dzValue" placeholder="请选择" style="width: 240px">
                   <el-option v-for="item in dzOptions" :key="item.value" :label="item.label" :value="item.value" />
-                </el-select>
+                </el-select> -->
                 <span style="margin-left: 10px">昵称：</span>
                 <el-input v-model="ncInput" style="width: 220px" placeholder="请输入" />
               </div>
@@ -81,35 +83,9 @@
   const ptInput = ref('')
   const ncInput = ref('')
   const szlValue = ref('')
-  const szlOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let szlOptions = ref([])
   const dzValue = ref('')
-  const dzOptions = [
-    {
-      value: 'Option1',
-      label: 'Option1',
-    },
-    {
-      value: 'Option2',
-      label: 'Option2',
-    },
-    {
-      value: 'Option3',
-      label: 'Option3',
-    },
-  ]
+  let dzOptions = ref([])
   const curPhone = ref('')
   onBeforeMount(() => {
     curPhone.value = JSON.parse(window.sessionStorage.getItem('curPhone'))
@@ -147,6 +123,8 @@
     const { data: res } = await service.get('/api/v1/query_name', { params: queryData })
     if (res.code == 200) {
       tableData.value = res.data
+      szlOptions.value = Array.from(new Set(res.data.map((item) => item.chain))).map((chain) => ({ label: chain, value: chain }))
+      // dzOptions.value = Array.from(new Set(res.data.map(item=>item.address))).map(address=>({label:address,value:address}))
     }
   }
   const resetClick = () => {

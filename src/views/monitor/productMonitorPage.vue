@@ -230,7 +230,7 @@
     } else {
       timeValue.value = null
     }
-    console.log('datetime变了')
+    // console.log('datetime变了')
     loadAPI()
     searchForm()
   })
@@ -258,13 +258,7 @@
     associatedIP.value = ''
     currency.value = ''
   }
-  const potOpt = ref([
-    { value: 1, label: 'BTC' },
-    { value: 2, label: 'ETH' },
-    { value: 3, label: 'ETH' },
-    { value: 4, label: 'LTC' },
-    { value: 5, label: 'LTC' },
-  ])
+  let potOpt = ref([])
   // const selectForm = reactive({
   //   account: '',
   //   associatedIP: '',
@@ -274,6 +268,8 @@
   //查询接口
   const searchForm = async () => {
     let list = {
+      s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
+      e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
       account: account.value,
       ip: associatedIP.value,
       coin_type: currency.value,
@@ -282,6 +278,7 @@
     if (res.code == 200) {
       // 更新挖矿钱包表格
       multipletableData.value = res.data
+      potOpt.value = Array.from(new Set(res.data.map((item) => item.coin))).map((coin) => ({ label: coin, value: coin }))
     } else {
       console.error('Error fetching data:')
     }
@@ -327,7 +324,6 @@
   }
   const currentPage = ref(1) //当前页码
   const pageSize = ref(10) //每页最大条数
-  const hostTotal = ref(199) //实际数据总条数
   //改变页面大小
   function handleSizeChange(val) {
     pageSize.value = val
