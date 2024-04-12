@@ -106,21 +106,34 @@
   const submitForm = (formEl: FormInstance | undefined) => {
     if (!formEl) return
     formEl.validate((valid) => {
+      console.log(valid)
+
       if (valid) {
         loading.value = true
         // 登录
         setTimeout(async () => {
-          await UserStore.login(ruleForm)
-          await router.push({
-            path: '/',
-          })
-          ElNotification({
-            title: getTimeStateStr(),
-            message: '欢迎登录',
-            type: 'success',
-            duration: 3000,
-          })
-          loading.value = true
+          try {
+            await UserStore.login(ruleForm)
+            await router.push({
+              path: '/',
+            })
+            ElNotification({
+              title: getTimeStateStr(),
+              message: '欢迎登录',
+              type: 'success',
+              duration: 3000,
+            })
+          } catch (error) {
+            console.log('Error:', error.message)
+            ElNotification({
+              title: getTimeStateStr(),
+              message: `${error.message}` + '，请重新输入！',
+              type: 'error',
+              duration: 3000,
+            })
+          } finally {
+            loading.value = false // 无论成功或失败都将 loading 设为 false
+          }
         }, 1000)
       } else {
         console.log('error submit!')

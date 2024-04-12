@@ -37,7 +37,22 @@ service.interceptors.request.use(
 
 //  response interceptor 接口响应拦截
 service.interceptors.response.use(
-  (response: AxiosResponse) => {
+  async (response: AxiosResponse) => {
+    if (response.data.data.code == 401) {
+      console.log(response)
+      const userStore = useUserStore()
+      const router = useRouter()
+      const TagsViewStore = useTagsViewStore()
+      const PermissionStore = usePermissionStore()
+      // Token 失效，执行相应的操作，例如跳转到登录页
+      // 这里你可以使用路由进行页面跳转，或者其他逻辑处理
+      // 例如使用 element-plus 的 Message 组件显示提示信息
+      ElMessage.error('Token 失效，请重新登录')
+      await userStore.logout()
+      await router.push({ path: '/login' })
+      TagsViewStore.clearVisitedView()
+      PermissionStore.clearRoutes()
+    }
     // 直接返回res，当然你也可以只返回res.data
     // 系统如果有自定义code也可以在这里处理
     return response

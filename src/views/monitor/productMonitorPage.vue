@@ -97,12 +97,12 @@
         <div style="width: 80%; margin: 0px auto; padding: 20px 0px">
           <el-form ref="selectForm" :inline="true">
             <el-row>
-              <el-col :span="6">
+              <el-col :span="7">
                 <el-form-item label="挖矿钱包/账号:">
                   <el-input v-model="account" placeholder="请输入关键字"></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="6">
+              <el-col :span="5">
                 <el-form-item label="关联IP:">
                   <el-input v-model="associatedIP" placeholder="请输入关键字"></el-input>
                 </el-form-item>
@@ -126,7 +126,7 @@
         <div style="width: 80%; margin: 0 auto">
           <el-table
             ref="multipleTable"
-            :data="multipletableData"
+            :data="multipletableData.slice((currentPage - 1) * pageSize, currentPage * pageSize)"
             tooltip-effect="dark"
             style="width: 100%"
             :row-style="{ height: '45px' }"
@@ -134,14 +134,15 @@
             @selection-change="handleSelectionChange"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column prop="date" label="挖矿钱包/账号" width="120" align="center"> </el-table-column>
-            <el-table-column prop="name" label="关联IP" width="120" align="center"> </el-table-column>
-            <el-table-column prop="address" label="矿机数" width="320" align="center"> </el-table-column>
+            <el-table-column prop="account" label="挖矿钱包/账号" min-width="320" align="center"> </el-table-column>
+            <el-table-column prop="ip" label="关联IP" min-width="160" align="center"> </el-table-column>
+            <el-table-column prop="num" label="矿机数" min-width="80" align="center"> </el-table-column>
             <el-table-column
-              prop="bname"
+              prop="coin"
               label="币种"
               show-overflow-tooltip
               sortable
+              min-width="80"
               align="center"
               :sort-by="sortColumn"
               @sort-change="handleSortChange"
@@ -150,16 +151,15 @@
           </el-table>
           <div style="padding: 30px 0">
             <div style="display: inline-block; color: rgba(0, 0, 0, 0.427450980392157)"
-              >共 {{ hostTotal }} 条记录，第 {{ currentPage }} / {{ Math.ceil(hostTotal / pageSize) }} 页</div
+              >共 {{ multipletableData.length }} 条记录，第 {{ currentPage }} / {{ Math.ceil(multipletableData.length / pageSize) }} 页</div
             >
             <div style="display: flex; justify-content: right; margin-top: -24px">
               <el-pagination
                 background
                 :current-page="currentPage"
-                :page-sizes="[10, 20, 30, 40]"
                 :page-size="pageSize"
-                layout=" prev, pager, next,sizes, jumper"
-                :total="hostTotal"
+                layout=" prev, pager, next, jumper"
+                :total="multipletableData.length"
                 @size-change="handleSizeChange"
                 @current-change="handleCurrentChange"
               >
@@ -232,6 +232,7 @@
     }
     console.log('datetime变了')
     loadAPI()
+    searchForm()
   })
 
   watch(timeValue, (newValue, oldValue) => {
@@ -252,6 +253,11 @@
   const account = ref('')
   const associatedIP = ref('')
   const currency = ref('')
+  const resetForm = () => {
+    account.value = ''
+    associatedIP.value = ''
+    currency.value = ''
+  }
   const potOpt = ref([
     { value: 1, label: 'BTC' },
     { value: 2, label: 'ETH' },
@@ -264,104 +270,27 @@
   //   associatedIP: '',
   //   currency: '',
   // })
-  const resetForm = () => {
-    account.value = ''
-    associatedIP.value = ''
-    currency.value = ''
-  }
+
   //查询接口
   const searchForm = async () => {
-    try {
-      let list = {
-        account: account.value,
-        associatedIP: associatedIP.value,
-        currency: currency.value,
-      }
-      const res = await axios.post('law/lawList', list)
-      if (res.code == 200) {
-        // 更新挖矿钱包表格
-        multipletableData.value = res.data.multipletableData
-      } else {
-        console.error('Error fetching data:')
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error)
+    let list = {
+      account: account.value,
+      ip: associatedIP.value,
+      coin_type: currency.value,
+    }
+    const { data: res } = await service.get('/api/v1/get_mining_account', { params: list })
+    if (res.code == 200) {
+      // 更新挖矿钱包表格
+      multipletableData.value = res.data
+    } else {
+      console.error('Error fetching data:')
     }
   }
 
-  let selltableData = ref([
-    {
-      date: '2016-05-02',
-      name: '王小虎',
-      address: ' 1518 弄',
-    },
-    {
-      date: '2016-05-04',
-      name: '王小虎',
-      address: ' 1517 弄',
-    },
-    {
-      date: '2016-05-01',
-      name: '王小虎',
-      address: ' 1519 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-    {
-      date: '2016-05-03',
-      name: '王小虎',
-      address: ' 1516 弄',
-    },
-  ])
+  let selltableData = ref([])
 
   //多选表单数据
-  const multipletableData = ref([
-    {
-      date: '20160503',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'BTC',
-    },
-    {
-      date: '20160502',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'TRX',
-    },
-    {
-      date: '20160504',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'ETH',
-    },
-    {
-      date: '20160501',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'LTC',
-    },
-    {
-      date: '20160508',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'TRX',
-    },
-    {
-      date: '20160506',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'ETH',
-    },
-    {
-      date: '20160507',
-      name: '王小虎',
-      address: '上海市普陀区金沙江路 1518 弄',
-      bname: 'BTC',
-    },
-  ])
+  const multipletableData = ref([])
   const multipleSelection = ref([])
   // const toggleSelection(rows) {
   //   if (rows) {
@@ -402,12 +331,10 @@
   //改变页面大小
   function handleSizeChange(val) {
     pageSize.value = val
-    // this.loadAPI();
   }
   //改变页码
   function handleCurrentChange(val) {
     currentPage.value = val
-    // this.loadAPI();
   }
   function drawHistogram1(xdate, kgipsdate, kjsdate) {
     if (document.getElementById('myhistogram1') == null) {
@@ -456,50 +383,7 @@
     }
     option && myChart.setOption(option)
   }
-  const kgipsdate2 = ref([
-    18203, 23489, 29034, 104970, 131744, 630230, 18203, 23489, 29034, 104970, 131744, 630230, 18203, 23489, 29034, 104970, 131744, 630230,
-    18203, 23489, 29034, 104970, 131744, 630230, 19325, 23438, 31000, 121594, 134141, 681807,
-  ])
-  const kjsdate2 = ref([
-    19325, 23438, 31000, 121594, 134141, 681807, 19325, 23438, 31000, 121594, 134141, 681807, 19325, 23438, 31000, 121594, 134141, 681807,
-    19325, 23438, 31000, 121594, 134141, 681807, 19325, 23438, 31000, 121594, 134141, 681807,
-  ])
-  const shengfendate = ref([
-    '北京市',
-    '天津市',
-    '河北省',
-    '山西省',
-    '内蒙古自治区',
-    '辽宁省',
-    '吉林省',
-    '黑龙江省',
-    '上海市',
-    '江苏省',
-    '浙江省',
-    '安徽省',
-    '福建省',
-    '江西省',
-    '山东省',
-    '河南省',
-    '湖北省',
-    '湖南省',
-    '广东省',
-    '广西壮族自治区',
-    '海南省',
-    '重庆市',
-    '四川省',
-    '贵州省',
-    '云南省',
-    '西藏自治区',
-    '陕西省',
-    '甘肃省',
-    '青海省',
-    '宁夏回族自治区',
-    '新疆维吾尔自治区',
-    '香港特别行政区',
-    '澳门特别行政区',
-    '台湾省',
-  ])
+
   function drawHistogram2(shengfendate, kgipsdate2, kjsdate2) {
     if (document.getElementById('myhistogram2') == null) {
       return
@@ -577,6 +461,7 @@
       kgiprhs.value = res.data.mining_ip_num
       kjsl.value = res.data.machine_num
       kciprhs.value = res.data.pool_ip_num
+      zhdzsl.value = res.data.account_num
     }
     const { data: resBar } = await service.get('/api/v1/get_mining_coins', {
       params: {
@@ -614,6 +499,7 @@
   }
   onMounted(() => {
     loadAPI()
+    searchForm()
   })
 </script>
 <style>

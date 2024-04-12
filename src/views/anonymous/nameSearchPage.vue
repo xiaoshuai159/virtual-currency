@@ -37,7 +37,11 @@
             <el-col :span="1"></el-col>
             <el-col :span="22">
               <div class="tableClass">
-                <el-table :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
+                <el-table
+                  :data="tableData.slice((pagination.currentPage - 1) * pagination.pageSize, pagination.currentPage * pagination.pageSize)"
+                  style="width: 100%"
+                  @selection-change="handleSelectionChange"
+                >
                   <el-table-column type="selection" width="55" />
                   <el-table-column prop="lsdz" label="链上地址" min-width="280" align="center" />
                   <el-table-column prop="ssl" label="所属链" min-width="100" align="center" />
@@ -52,7 +56,7 @@
                   background
                   :page-size="10"
                   layout="total, prev, pager, next, jumper"
-                  :total="total"
+                  :total="tableData.length"
                   @size-change="handleSizeChange"
                   @current-change="handleCurrentChange"
                 />
@@ -89,7 +93,13 @@
             <el-col :span="1"></el-col>
             <el-col :span="22">
               <div class="tableClass">
-                <el-table :data="tableData2" style="width: 100%" @selection-change="handleSelectionChange2">
+                <el-table
+                  :data="
+                    tableData2.slice((pagination2.currentPage - 1) * pagination2.pageSize, pagination2.currentPage * pagination2.pageSize)
+                  "
+                  style="width: 100%"
+                  @selection-change="handleSelectionChange2"
+                >
                   <el-table-column type="selection" width="55" />
                   <el-table-column prop="bz" label="币种" min-width="140" align="center" />
                   <el-table-column prop="kjs" label="矿机数" min-width="140" align="center" />
@@ -102,7 +112,7 @@
                   background
                   :page-size="10"
                   layout="total, prev, pager, next, jumper"
-                  :total="total2"
+                  :total="tableData2.length"
                   @size-change="handleSizeChange2"
                   @current-change="handleCurrentChange2"
                 />
@@ -116,8 +126,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-  import { ref, reactive } from 'vue'
+  import { ref, reactive, onBeforeMount } from 'vue'
   import type { TabsPaneContext } from 'element-plus'
+  import service from '@/api/request'
   interface User {
     qbdz: string
     ssl: string
@@ -162,76 +173,11 @@
   const lsdzInput = ref('')
   const bzInput = ref('')
   const smxxInput = ref('')
-  const tableData = [
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-    {
-      lsdz: '0xe35bbafa0266089f95d745d348b468622805d82b',
-      ssl: 'TRON',
-      pt: 'Huobi',
-      sfxx: '个人',
-      glsmxx: '*******4901',
-    },
-  ]
+  let tableData = ref([])
   const pagination = reactive({
     currentPage: 1,
     pageSize: 10,
   })
-  const total = ref(0)
   const handleSizeChange = (val: number) => {
     console.log(`${val} items per page`)
   }
@@ -244,63 +190,11 @@
     multipleSelection.value = val
   }
 
-  const tableData2 = [
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-    {
-      bz: 'ETH',
-      kjs: '3820',
-      kcym: 'channel.vaincues.com',
-    },
-  ]
+  let tableData2 = ref([])
   const pagination2 = reactive({
     currentPage: 1,
     pageSize: 10,
   })
-  const total2 = ref(0)
   const multipleSelection2 = ref<User[]>([])
   const handleSizeChange2 = (val: number) => {
     console.log(`${val} items per page`)
@@ -312,8 +206,17 @@
   const handleSelectionChange2 = (val: User[]) => {
     multipleSelection2.value = val
   }
-  const searchClick1 = () => {
-    console.log('点击了查询按钮')
+  const searchClick1 = async () => {
+    const queryData = {
+      value: curIp.value,
+      exchange: jyptValue.value,
+      address: qbInput.value,
+      chain: sslValue.value,
+    }
+    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    if (res.code == 200) {
+      tableData.value = res.data
+    }
   }
   const resetClick1 = () => {
     smxxInput.value = ''
@@ -322,8 +225,17 @@
     console.log('点击了重置按钮')
     searchClick1()
   }
-  const searchClick2 = () => {
-    console.log('点击了查询按钮')
+  const searchClick2 = async () => {
+    const queryData = {
+      value: curIp.value,
+      exchange: jyptValue.value,
+      address: qbInput.value,
+      chain: sslValue.value,
+    }
+    const { data: res } = await service.get('/api/v1/query_ip_address', { params: queryData })
+    if (res.code == 200) {
+      tableData2.value = res.data
+    }
   }
   const resetClick2 = () => {
     bzInput.value = ''
@@ -331,6 +243,12 @@
     console.log('点击了重置按钮')
     searchClick2()
   }
+  let curName = ref('')
+  onBeforeMount(() => {
+    curName.value = JSON.parse(window.sessionStorage.getItem('curName'))
+    searchClick1()
+    searchClick2()
+  })
 </script>
 <style lang="scss" scoped>
   .el-pagination {
