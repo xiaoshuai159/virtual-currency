@@ -45,7 +45,7 @@
         <div style="height: auto; padding: 10px 0px">
           <div style="width: 94%; margin: 0 auto">
             <el-table :data="buytableData">
-              <el-table-column prop="address" label="地址" width="180" align="center"> </el-table-column>
+              <el-table-column prop="address" label="地址" width="180" align="center" show-overflow-tooltip> </el-table-column>
               <el-table-column prop="name" label="关联实名信息" width="140" align="center"> </el-table-column>
               <el-table-column prop="area" label="归属地" width="140" align="center"> </el-table-column>
               <el-table-column prop="num" label="收入量" align="center"> </el-table-column>
@@ -60,7 +60,7 @@
         <div style="height: auto; padding: 10px 0px">
           <div style="width: 94%; margin: 0 auto">
             <el-table :data="selltableData">
-              <el-table-column prop="address" label="地址" width="180" align="center"> </el-table-column>
+              <el-table-column prop="address" label="地址" width="180" align="center" show-overflow-tooltip> </el-table-column>
               <el-table-column prop="name" label="关联实名信息" width="140" align="center"> </el-table-column>
               <el-table-column prop="area" label="归属地" width="140" align="center"> </el-table-column>
               <el-table-column prop="num" label="支出量" align="center"> </el-table-column>
