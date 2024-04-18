@@ -59,12 +59,17 @@ export const useUserStore = defineStore({
 
         formData.append('user_info', this.userInfo.user_id)
         const { data: res } = await service.post('/api/v1/login_out', formData)
+        console.log('执行了store 的logout')
+
         if (res.code == 200) {
           this.token = null
           this.userInfo = {}
           this.roles = []
           resolve(null)
         } else {
+          this.token = null
+          this.userInfo = {}
+          this.roles = []
           resolve(null)
         }
       })
