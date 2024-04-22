@@ -268,8 +268,8 @@
   //查询接口
   const searchForm = async () => {
     let list = {
-      s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-      e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+      s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+      e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       account: account.value,
       ip: associatedIP.value,
       coin_type: currency.value,
@@ -447,10 +447,12 @@
 
   //获取数据
   const loadAPI = async () => {
+    console.log(typeof dayjs(datetime.value[0]).format('YYYY-MM-DD'))
+    console.log(dayjs(datetime.value[0]).format('YYYY-MM-DD'))
     const { data: res } = await service.get('/api/v1/get_mining_header', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (res.code == 200) {
@@ -461,10 +463,11 @@
     }
     const { data: resBar } = await service.get('/api/v1/get_mining_coins', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
+
     if (resBar.code == 200) {
       const currencies = Object.keys(resBar.data.miner)
       const minerValues = Object.values(resBar.data.miner).map((value) => value || 0)
@@ -473,8 +476,8 @@
     }
     const { data: tableData } = await service.get('/api/v1/get_mining_top', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (tableData.code == 200) {
@@ -482,8 +485,8 @@
     }
     const { data: resArea } = await service.get('/api/v1/get_mining_area', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (resArea.code == 200) {

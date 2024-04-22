@@ -292,8 +292,8 @@
   const loadAPI = async () => {
     const { data: res } = await service.get('/api/v1/get_exchange_header', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (res.code == 200) {
@@ -306,8 +306,8 @@
     }
     const { data: resPie } = await service.get('/api/v1/get_exchange_coins', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (resPie.code == 200) {
@@ -325,8 +325,8 @@
     }
     const { data: tableData } = await service.get('/api/v1/get_exchange_top', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (tableData.code == 200) {

@@ -317,8 +317,8 @@
   const loadAPI = async () => {
     const { data: res } = await service.get('/api/v1/get_software_header', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (res.code == 200) {
@@ -332,8 +332,8 @@
     }
     const { data: resPie } = await service.get('/api/v1/get_software_pie', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (resPie.code == 200) {
@@ -352,8 +352,8 @@
     }
     const { data: resBar } = await service.get('/api/v1/get_software_bar', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (resBar.code == 200) {
@@ -364,8 +364,8 @@
     }
     const { data: resLine } = await service.get('/api/v1/get_software_line', {
       params: {
-        s_date: dayjs(datetime.value[0].toLocaleString()).format('YYYY-MM-DD'),
-        e_date: dayjs(datetime.value[1].toLocaleString()).format('YYYY-MM-DD'),
+        s_date: dayjs(datetime.value[0]).format('YYYY-MM-DD'),
+        e_date: dayjs(datetime.value[1]).format('YYYY-MM-DD'),
       },
     })
     if (resLine.code == 200) {
